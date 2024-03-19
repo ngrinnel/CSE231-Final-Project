@@ -12,9 +12,9 @@ from RR_algo import RoundRobin
 csv_input_path = 'test/process_input_data.csv'
 
 while True:
-    print('\033[94m' + '--------------------------------------')
-    print('FCFS = 1 | SJF = 2 | RR = 3 | MLFQ = 4')
-    print('--------------------------------------' + '\033[0m')
+    print('\033[94m' + '------------------------------------------------------------')
+    print('FCFS = 1 | SJF = 2 | RR = 3 | MLFQ = 4 | CGPTS = 5 | GS = 6')
+    print('------------------------------------------------------------' + '\033[0m')
     data_collector = []
     try:
         mode = int(input('Enter: '))
@@ -30,7 +30,8 @@ while True:
                                       process.arrival_time,
                                       process.cpu_burst_time1,
                                       process.io_time,
-                                      process.cpu_burst_time2))
+                                      process.cpu_burst_time2,
+                                      process.title))
     if mode == 1:
         # ------------------- FCFS -------------------
         result = FCFS(processes=data_collector.getProcesses())
@@ -47,6 +48,10 @@ while True:
         # ------------------ MLFQ --------------------
         result = MLFQ(processes=data_collector.getProcesses().copy())
         grantt_chart = result.cpu_process()
+    elif mode == 5:
+        print("ChatGPT Scheduler not yet implemented")
+    elif mode == 6:
+        print("Gemini Scheduler not yet implemented")
     else:
         exit(0)
     if result is not None:

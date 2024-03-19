@@ -48,17 +48,20 @@ class GranttAnalysis:
         self.calculate_turn_around_time()
         self.calculate_waiting_time()
 
-        print('=======================================================================================================')
+        print('====================================================================================================================================================')
         print('                                               %s                                    ' % status.upper())
-        print('=======================================================================================================')
+        print('====================================================================================================================================================')
 
-        print('\t\t   Response Time\t  Turnaround Time\t   Waiting Time\t\t    Start Time\t\t\t End Time')
+        print('\t\t   Title\t  Response Time\t  Turnaround Time\t   Waiting Time\t\t    Start Time\t\t End Time')
         indexes = []
+        titles = []
         for info in self.grantt_chart:
             indexes.append(info.process.process_id)
+            titles.append(info.process.title)
         count = 0
         for index in indexes:
-            print('P%d\t\t\t\t%d\t\t\t\t\t%d\t\t\t\t\t%d\t\t\t\t\t%d\t\t\t\t\t%d' % (index,
+            print('P%d\t\t%s\t\t%d\t\t%d\t\t\t%d\t\t\t%d\t\t\t%d' % (index,
+                                                                                     titles[count],
                                                                                      self.response_time[count][1],
                                                                                      self.turn_around_time[count][1],
                                                                                      self.waiting_time[count][1],
@@ -75,7 +78,7 @@ class GranttAnalysis:
 
         print('-------------------------------------------------------------------------------------------------------')
 
-        print('Avg\t\t\t\t%.1f\t\t\t\t\t%.1f\t\t\t\t%.1f\n' % (response_time_avg,
+        print('Avg\t\t\t\t\t%.1f\t\t%.1f\t\t\t%.1f\n' % (response_time_avg,
                                                              turn_around_time_avg,
                                                              waiting_time_avg))
 

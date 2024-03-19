@@ -19,7 +19,8 @@ class DataCollector:
                                           int(file['arrival_time'][index]),
                                           int(file['cpu_time1'][index]),
                                           int(file['io_time'][index]),
-                                          int(file['cpu_time2'][index])
+                                          int(file['cpu_time2'][index]),
+                                          str(file['title'][index])
                                           ))
 
     def getProcesses(self):
