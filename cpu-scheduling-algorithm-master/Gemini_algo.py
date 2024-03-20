@@ -75,6 +75,7 @@ class GeminiS:
 
             #GEMINI PROMPTING
             #clean up ready processes to pass onto AI
+            time.sleep(3)
             response = None
             tempP = []
             for process in ready_processes_queue:
@@ -82,8 +83,8 @@ class GeminiS:
             try:
                 response = model.generate_content("Given the info about the following CPU processes,\
                  please select the next process that should be scheduled on the CPU. The data comes in the form of a list,\
-                  where each process is separate by a comma. Respond simply with the process ID and its title, then a short explanation \
-                  of why you chose that variable. Here is the list of processes:\n" + str(tempP))
+                 where each process is separate by a comma. Respond simply with the process ID (a single number) and absolutely nothing else. \
+                 Here is the list of processes:\n" + str(tempP))
             except Exception as msg: #https://github.com/google/generative-ai-python/issues/126
                 print(msg)
                 print('Error generating message!')
