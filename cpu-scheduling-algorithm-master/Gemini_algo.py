@@ -78,6 +78,7 @@ class GeminiS:
             time.sleep(3)
             response = None
             tempP = []
+            gemini_id = 0
             for process in ready_processes_queue:
                 tempP.append(process[0])
             try:
@@ -89,19 +90,19 @@ class GeminiS:
                 print(msg)
                 print('Error generating message!')
             if response and response.text:
-                print(response.text)
+                gemini_id = int(response.text)
+                print("Gemini ID: ", gemini_id)
+                print("\n")
 
-            #for process in ready_processes_queue:
-            #    print(ready_processes_queue[0])
-            """
-            tempP = []
-            for process in ready_processes_queue:
-                tempP.append(process[0])
-            print(tempP)
-            print("\n")
-            """
+
+            for i, process in enumerate(ready_processes_queue):
+                if process[0].process_id == gemini_id:
+                    process_to_move = ready_processes_queue.pop(i)
+                    ready_processes_queue.insert(0, process_to_move)
+                    break
 
             current_process = ready_processes_queue[0][0]
+            print("CURRENT", current_process)
             pre_current_process = current_process.cpu_burst_time1 + current_process.cpu_burst_time2 + current_process.io_time
             if current_process.cpu_burst_time1 > 0 and current_process.arrival_time <= current_cpu_time:
                 not_entered = True
