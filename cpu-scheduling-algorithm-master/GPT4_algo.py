@@ -68,7 +68,8 @@ class GPT4S:
                 #print("process HERE:",process[0])
                 process_info = f"Process ID: {process[0].process_id}, " \
                             f"Arrival Time: {process[0].arrival_time}, " \
-                            f"CPU Burst Time: {process[0].cpu_burst_time1 + process[0].cpu_burst_time2}, " \
+                            f"CPU Burst Time 1: {process[0].cpu_burst_time1}, " \
+                            f"CPU Burst Time 2: {process[0].cpu_burst_time2}, " \
                             f"IO Time: {process[0].io_time}, " \
                             f"Title: {process[0].title}"
                 processes_info.append(process_info)
