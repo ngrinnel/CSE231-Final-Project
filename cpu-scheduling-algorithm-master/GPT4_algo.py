@@ -1,4 +1,7 @@
 import sys
+import os
+import requests
+import json
 
 sys.path.append(".")
 from Grantt_Information import ProcessGrantInfo
@@ -10,12 +13,31 @@ class GPT4S:
     grantt_chart = []
     queue_num = None
     ClassName = 'GPT4S'
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    OPENAI_CHAT_ENDPOINT = "https://api.openai.com/v1/chat/completions"
 
     def __init__(self, processes, mode=''):
         self.mode = mode
         self.processes = processes
         if mode != '':
             self.queue_num = mode.split('xx')[0]
+    def get_chatgpt_response(self, prompt):
+        headers = {
+            "Authorization": f"Bearer {self.OPENAI_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model": "gpt-4",  # Or any other suitable model
+            "messages": [{"role": "user", "content": prompt}]
+        }
+        response = requests.post(self.OPENAI_CHAT_ENDPOINT, headers=headers, data=json.dumps(data))
+        if response.status_code == 200:
+            response_data = response.json()
+            generated_text = response_data['choices'][0]['message']['content']
+            return generated_text.strip()
+        else:
+            print(f"Error: {response.status_code}\n{response.text}")
+            return None
 
     def cpu_process(self, time_quantum):
         current_cpu_time = 0
@@ -39,6 +61,32 @@ class GPT4S:
             if len(ready_processes_queue) == 0:
                 current_cpu_time += 1
                 continue
+
+            
+            processes_info = []
+            for process in ready_processes_queue:
+                #print("process HERE:",process[0])
+                process_info = f"Process ID: {process[0].process_id}, " \
+                            f"Arrival Time: {process[0].arrival_time}, " \
+                            f"CPU Burst Time: {process[0].cpu_burst_time1 + process[0].cpu_burst_time2}, " \
+                            f"IO Time: {process[0].io_time}, " \
+                            f"Title: {process[0].title}"
+                processes_info.append(process_info)
+                #print("Process info: ", process_info)
+
+            #prompt for CHATGPT
+            prompt = ("Given the info about the following CPU processes, "
+                      "please select the next process that should be scheduled on the CPU. "
+                      "The data comes in the form of a list, where each process is separated by a comma. "
+                      "Respond simply with the process ID (a single number) and absolutely nothing else. "
+                      "Here is the list of processes:\n" + ", ".join(processes_info))
+
+            #Response from ChatPGT
+            try:
+                decision = self.get_chatgpt_response(prompt)
+                print(f"ChatGPT decision: {decision}")
+            except Exception as e:
+                print(f"Error generating message: {e}")
 
             sub_count = ready_processes_queue[0][1]
             current_process = ready_processes_queue[0][0]
