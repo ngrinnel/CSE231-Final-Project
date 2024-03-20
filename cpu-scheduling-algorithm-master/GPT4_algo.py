@@ -61,8 +61,10 @@ class GPT4S:
             if len(ready_processes_queue) == 0:
                 current_cpu_time += 1
                 continue
-
             
+            sub_count = ready_processes_queue[0][1]
+
+            #New code added for CHATGPT PROMPTING
             processes_info = []
             for process in ready_processes_queue:
                 #print("process HERE:",process[0])
@@ -85,12 +87,24 @@ class GPT4S:
             #Response from ChatPGT
             try:
                 decision = self.get_chatgpt_response(prompt)
-                print(f"ChatGPT decision: {decision}")
-            except Exception as e:
-                print(f"Error generating message: {e}")
+                selected_process_id = int(decision)
+                #print(f"Selected Process ID: {selected_process_id}")
 
-            sub_count = ready_processes_queue[0][1]
+            except Exception as e:
+                selected_process_id = None
+                print(f"Error generating message: {e}")
+                print("Received invalid process ID from ChatGPT")
+
+            if selected_process_id is not None:
+                for i, process_info in enumerate(ready_processes_queue):
+                    if process_info[0].process_id == selected_process_id:
+                        process_to_schedule_next = ready_processes_queue.pop(i)
+                        ready_processes_queue.insert(0, process_to_schedule_next)
+                        #print(f"Process {selected_process_id} scheduled next.")
+                        break
+
             current_process = ready_processes_queue[0][0]
+            #print("CURRENT", current_process)
             pre_current_process = current_process.cpu_burst_time1 + current_process.cpu_burst_time2 + current_process.io_time
             if current_process.cpu_burst_time1 > 0 and current_process.arrival_time <= current_cpu_time:
                 not_entered = True
