@@ -88,7 +88,9 @@ class GPT4S:
             selected_process_id = None
             try:
                 decision = self.get_chatgpt_response(prompt)
-                if decision.isdigit():
+                if not decision:
+                    print("ERROR GENERATING RESPONSE")
+                elif decision.isdigit():
                     selected_process_id = int(decision)
                 #print(f"Selected Process ID: {selected_process_id}")
 
