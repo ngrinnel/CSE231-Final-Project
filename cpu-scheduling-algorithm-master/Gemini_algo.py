@@ -75,7 +75,7 @@ class GeminiS:
 
             #GEMINI PROMPTING
             #clean up ready processes to pass onto AI
-            time.sleep(3)
+            time.sleep(3) #necessary for not going above quota
             response = None
             tempP = []
             gemini_id = 0
@@ -89,17 +89,20 @@ class GeminiS:
             except Exception as msg: #https://github.com/google/generative-ai-python/issues/126
                 print(msg)
                 print('Error generating message!')
+            gemini_id = None
+            #https://stackoverflow.com/questions/1265665/how-can-i-check-if-a-string-represents-an-int-without-using-try-except
             if response and response.text:
-                gemini_id = int(response.text)
+                if response.text.isdigit():
+                    gemini_id = int(response.text)
                 print("Gemini ID: ", gemini_id)
                 print("\n")
 
-
-            for i, process in enumerate(ready_processes_queue):
-                if process[0].process_id == gemini_id:
-                    process_to_move = ready_processes_queue.pop(i)
-                    ready_processes_queue.insert(0, process_to_move)
-                    break
+            if gemini_id:
+                for i, process in enumerate(ready_processes_queue):
+                    if process[0].process_id == gemini_id:
+                        process_to_move = ready_processes_queue.pop(i)
+                        ready_processes_queue.insert(0, process_to_move)
+                        break
 
             current_process = ready_processes_queue[0][0]
             print("CURRENT", current_process)

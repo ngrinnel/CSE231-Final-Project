@@ -85,13 +85,14 @@ class GPT4S:
                       "Here is the list of processes:\n" + ", ".join(processes_info))
 
             #Response from ChatPGT
+            selected_process_id = None
             try:
                 decision = self.get_chatgpt_response(prompt)
-                selected_process_id = int(decision)
+                if decision.isdigit():
+                    selected_process_id = int(decision)
                 #print(f"Selected Process ID: {selected_process_id}")
 
             except Exception as e:
-                selected_process_id = None
                 print(f"Error generating message: {e}")
                 print("Received invalid process ID from ChatGPT")
 
