@@ -27,7 +27,7 @@ class GPT4S:
             "Content-Type": "application/json"
         }
         data = {
-            "model": "gpt-4",  # Or any other suitable model
+            "model": "gpt-3.5-turbo",  # Or any other suitable model
             "messages": [{"role": "user", "content": prompt}]
         }
         response = requests.post(self.OPENAI_CHAT_ENDPOINT, headers=headers, data=json.dumps(data))
