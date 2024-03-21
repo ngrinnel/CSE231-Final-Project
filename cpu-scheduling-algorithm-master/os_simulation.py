@@ -11,7 +11,7 @@ from RR_algo import RoundRobin
 from GPT4_algo import GPT4S
 from Gemini_algo import GeminiS
 
-csv_input_path = 'test/process_input_data.csv'
+csv_input_path = 'test/Set0_CPU_Time1ver2.csv'
 
 while True:
     print('\033[94m' + '------------------------------------------------------------')
@@ -27,6 +27,7 @@ while True:
     # ------- get a deep copy of processes -------
     processes_copy = []
     result = None
+    print("File being executed: " + csv_input_path + "\n")
     for process in data_collector.getProcesses().copy():
         processes_copy.append(Process(process.process_id,
                                       process.arrival_time,
