@@ -11,7 +11,7 @@ from RR_algo import RoundRobin
 from GPT4_algo import GPT4S
 from Gemini_algo import GeminiS
 
-csv_input_path = 'test/Set0_TitleVer3.csv'
+csv_input_path = 'test/Set0_Negative_TitleVer2.csv'
 
 while True:
     print('\033[94m' + '------------------------------------------------------------')
@@ -37,18 +37,22 @@ while True:
     if mode == 1:
         # ------------------- FCFS -------------------
         result = FCFS(processes=data_collector.getProcesses())
+        print("FileName: ", csv_input_path)
         grantt_chart = result.cpu_process()
     elif mode == 2:
         # ------------------- SJF --------------------
         result = SJF(processes=data_collector.getProcesses())
+        print("FileName: ", csv_input_path)
         grantt_chart = result.cpu_process()
     elif mode == 3:
         # ------------------- RR ---------------------
         result = RoundRobin(processes=data_collector.getProcesses().copy())
+        print("FileName: ", csv_input_path)
         grantt_chart = result.cpu_process(time_quantum=1)
     elif mode == 4:
         # ------------------ MLFQ --------------------
         result = MLFQ(processes=data_collector.getProcesses().copy())
+        print("FileName: ", csv_input_path)
         grantt_chart = result.cpu_process()
     elif mode == 5:
         #print("ChatGPT Scheduler not yet implemented")
