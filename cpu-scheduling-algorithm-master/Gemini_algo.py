@@ -94,8 +94,8 @@ class GeminiS:
             if response and response.text:
                 if response.text.isdigit():
                     gemini_id = int(response.text)
-                print("Gemini ID: ", gemini_id)
-                print("\n")
+                #print("Gemini ID: ", gemini_id)
+                #print("\n")
 
             if gemini_id:
                 for i, process in enumerate(ready_processes_queue):
@@ -105,7 +105,7 @@ class GeminiS:
                         break
 
             current_process = ready_processes_queue[0][0]
-            print("CURRENT", current_process)
+            #print("CURRENT", current_process)
             pre_current_process = current_process.cpu_burst_time1 + current_process.cpu_burst_time2 + current_process.io_time
             if current_process.cpu_burst_time1 > 0 and current_process.arrival_time <= current_cpu_time:
                 not_entered = True
