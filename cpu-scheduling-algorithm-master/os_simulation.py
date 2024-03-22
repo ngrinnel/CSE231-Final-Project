@@ -52,11 +52,11 @@ while True:
         result = MLFQ(processes=data_collector.getProcesses().copy())
         grantt_chart = result.cpu_process()
     elif mode == 5:
-        print("ChatGPT Scheduler not yet implemented")
+        #print("ChatGPT Scheduler not yet implemented")
         result = GPT4S(processes=data_collector.getProcesses().copy())
         grantt_chart = result.cpu_process(time_quantum=1)
     elif mode == 6:
-        print("Gemini Scheduler not yet implemented")
+        #print("Gemini Scheduler not yet implemented")
         result = GeminiS(processes=data_collector.getProcesses().copy())
         grantt_chart = result.cpu_process(time_quantum=1)
     else:
