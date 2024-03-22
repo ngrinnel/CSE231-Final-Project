@@ -75,7 +75,7 @@ class GeminiS:
 
             #GEMINI PROMPTING
             #clean up ready processes to pass onto AI
-            time.sleep(3) #necessary for not going above quota
+            time.sleep(1) #necessary for not going above quota
             response = None
             tempP = []
             gemini_id = 0
