@@ -11,7 +11,7 @@ from RR_algo import RoundRobin
 from GPT4_algo import GPT4S
 from Gemini_algo import GeminiS
 
-csv_input_path = 'test/Set0_CPU_Time1ver2.csv'
+csv_input_path = 'test/Set0_CPU_Time2ver2.csv'
 
 while True:
     print('\033[94m' + '------------------------------------------------------------')

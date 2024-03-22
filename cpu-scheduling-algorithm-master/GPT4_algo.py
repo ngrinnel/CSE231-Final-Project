@@ -92,7 +92,7 @@ class GPT4S:
                     print("ERROR GENERATING RESPONSE")
                 elif decision.isdigit():
                     selected_process_id = int(decision)
-                #print(f"Selected Process ID: {selected_process_id}")
+                    #print(f"Selected Process ID: {selected_process_id}")
 
             except Exception as e:
                 print(f"Error generating message: {e}")
